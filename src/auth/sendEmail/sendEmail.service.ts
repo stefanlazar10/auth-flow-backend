@@ -6,8 +6,8 @@ import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class SendEmailService {
     constructor(private configService: ConfigService) {
-        // sgMail.setApiKey(this.configService.get<string>('SENDGRID_API_KEY'))
-        sgMail.setApiKey('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')
+        const apiKey = this.configService.get<string>('SENDGRID_API_KEY')
+        sgMail.setApiKey(apiKey)
     }
 
     async sendOtpEmail(to: string, otp: string): Promise<void> {
@@ -31,7 +31,7 @@ export class SendEmailService {
             to: to,
             from: 'lazarstefy1@gmail.com',
             subject: 'Your Verification Link is here',
-            text: `Your verification link is www.sexybomba.ro`
+            text: `Your verification link is www.verificationlink.link`
 
         }
 
@@ -43,12 +43,12 @@ export class SendEmailService {
         }
     }
 
-    async sendRecoverPass(to: string): Promise<void> {
+    async sendRecoverPass(to: string, password: string): Promise<void> {
         const msg = {
             to: to,
             from: 'lazarstefy1@gmail.com',
             subject: 'Your New Password is here',
-            text: `Your new password  is wS23kFldSOtye`
+            text: `Your new password is: ${password}`
 
         }
 

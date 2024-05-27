@@ -31,16 +31,16 @@ export class AuthController {
 
   @Public()
   @HttpCode(HttpStatus.OK)
-  @Post('recover')
+  @Post('recover-password')
   async recoverPass(@Body() recoverPasswordDto: RecoverPasswordDto) {
-    return this.sendEmailService.sendRecoverPass(recoverPasswordDto.email)
+    recoverPasswordDto.password = this.authService.generatePassword()
+    return this.sendEmailService.sendRecoverPass(recoverPasswordDto.email, recoverPasswordDto.password)
   }
 
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('validate-otp')
   async validateOTP(@Body() otpDataDto: OtpDataDto) {
-    console.log(otpDataDto, this.authService.validateOTP(otpDataDto))
     return this.authService.validateOTP(otpDataDto)
 
   }
@@ -52,12 +52,4 @@ export class AuthController {
     return this.authService.createOTP(otpDataDto);
   }
 
-
-
-
-
-  //    @Get('/:email')
-  //   async findOneByEmail(@Param('email') email: string): Promise<User | undefined> {
-  //       return this.userService.findUserByEmail(email)
-  //  }
 }

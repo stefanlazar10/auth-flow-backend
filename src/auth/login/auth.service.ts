@@ -76,7 +76,11 @@ export class AuthService {
 
     return { otpCode, OTPtimestamp }
   }
+  public generatePassword() {
+    const generatedPassword = Math.random().toString(36).slice(-8)
+    return generatedPassword
 
+  }
   async validateOTP(otpDataDto: OtpDataDto): Promise<boolean> {
     const { otpCode } = otpDataDto
     try {

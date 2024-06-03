@@ -33,8 +33,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('recover-password')
   async recoverPass(@Body() recoverPasswordDto: RecoverPasswordDto) {
-    recoverPasswordDto.password = this.authService.generatePassword()
-    return this.sendEmailService.sendRecoverPass(recoverPasswordDto.email, recoverPasswordDto.password)
+    return this.sendEmailService.sendRecoverPass(recoverPasswordDto.email)
   }
 
   @Public()

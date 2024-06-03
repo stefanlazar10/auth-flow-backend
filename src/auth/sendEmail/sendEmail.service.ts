@@ -7,7 +7,9 @@ import { ConfigService } from '@nestjs/config';
 export class SendEmailService {
     constructor(private configService: ConfigService) {
         const apiKey = this.configService.get<string>('SENDGRID_API_KEY')
+        console.log(apiKey)
         sgMail.setApiKey(apiKey)
+
     }
 
     async sendOtpEmail(to: string, otp: string): Promise<void> {
@@ -43,12 +45,12 @@ export class SendEmailService {
         }
     }
 
-    async sendRecoverPass(to: string, password: string): Promise<void> {
+    async sendRecoverPass(to: string): Promise<void> {
         const msg = {
             to: to,
             from: 'lazarstefy1@gmail.com',
-            subject: 'Your New Password is here',
-            text: `Your new password is: ${password}`
+            subject: 'Your link is here',
+            html: `Change your password by clicking this link: <a href="http://localhost:3000/change-password">Reset your password</a>`
 
         }
 
